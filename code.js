@@ -3,12 +3,12 @@
 const botonesCategorias = document.querySelectorAll(".btnCategoria");
 const items = document.querySelectorAll(".item");
 
-botonesCategorias.forEach((btn) => {
-  btn.addEventListener("click", function () {
-    const categoria = this.getAttribute("data-categoria");
-    ocultarTodosLosItems();
-    document.querySelectorAll("." + categoria).forEach((item) => {
-      item.style.display = "block";
+botonesCategorias.forEach((btn) => { //recorremos cada boton(por si agrego más)
+  btn.addEventListener("click", function () { //agregamos la funcion a ejecutar.
+    const categoria = this.getAttribute("data-categoria"); //'this' hace referencia al boton que se este ejecutando en el momento.
+    ocultarTodosLosItems(); //funcion que pone en "display: none;" todos los items a los no hace referencia ese boton.
+    document.querySelectorAll("." + categoria).forEach((item) => { //toma cada item de 'categoria', y le agrega un punto parra tomarlo como clase.
+      item.style.display = "block"; //hace que se muestren los items a los que hace referencia el boton presionado.
     });
   });
 });
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formulario.addEventListener("submit", function (event) {
       event.preventDefault(); // Evita que el formulario se envíe de la manera estándar y que se refresque la pagina.
   
-      // Obtén los valores del formulario
+      // Obtenemos los valores del formulario
       const imagen = document.getElementById("imagen").files[0];
       const nombre = document.getElementById("nombre").value;
       const categoria = document.getElementById("categoria").value;
@@ -66,3 +66,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
+  let iconShow = false;
+  const formulario = document.getElementById("formulario");
+  const icon = document.getElementById("container-icon");
+  
+  formulario.style.display = "none";
+
+  icon.addEventListener("click", function(){ 
+    iconShow = !iconShow
+  
+    if(iconShow == false){
+      formulario.style.display = "none";
+    }else if(iconShow == true){
+      formulario.style.display = "block";
+    }
+
+  });
+  
+
