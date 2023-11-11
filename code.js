@@ -6,12 +6,32 @@ formulario.style.display = "none";
 
 botonesCategorias.forEach((btn) => { //recorremos cada boton(por si agrego más)
   btn.addEventListener("click", function () { //agregamos la funcion a ejecutar.
-    const categoria = this.getAttribute("data-categoria"); //'this' hace referencia al boton que se este ejecutando en el momento.
+    const categoria = this.getAttribute("data-categoria"); //'this' hace referencia al objeto que se este ejecutando en el momento.
     items = document.querySelectorAll(".item"); //para que la pagina agregue cualquier item nuevo 
     ocultarTodosLosItems(); //funcion que pone en "display: none;" todos los items a los no hace referencia ese boton.
     document.querySelectorAll("." + categoria).forEach((item) => { //toma cada item de 'categoria', y le agrega un punto parra tomarlo como clase.
       item.style.display = "block"; //hace que se muestren los items a los que hace referencia el boton presionado.
     });
+  });
+});
+
+
+
+items = document.querySelectorAll(".item");
+
+//! FUNCION PARA ACCEDER A CADA CATEGORIA DE ROPA Y SUS PRODUCTOS
+/*a cada hijo de los items de ropa(top,pantalones, etc) les agregue una 'data-category' que sera igual a la clase extra dentro de cada 'hijo',
+es decir que la categoria 'polo' tenddra como data category 'polo' pero su clase seguira siendo 'item top', 
+y todos sus hijos tendran la clase 'item polo' */
+items.forEach((item) => { 
+  item.addEventListener("click", function () {
+    const categoriaInterna = this.getAttribute("data-category");
+    if (!item.classList.contains("final")) { // verifico si tienen la clase "final" antes de ocultar los items y mostrar los nuevos.
+      ocultarTodosLosItems();
+    document.querySelectorAll("." + categoriaInterna).forEach((item) => {
+      item.style.display = "block";
+    });
+    }
   });
 });
 
@@ -92,4 +112,5 @@ function ocultarTodosLosItems() {
     item.style.display = "none";
   });
 }
+
 
