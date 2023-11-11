@@ -168,10 +168,9 @@ header h1 {
 }
 
 .info-product h2{
-  background-color: #232b2b;
+  font-variant-caps:all-petite-caps;
   border: 3px solid #1a2121;
-  border-radius: .4rem;
-  padding: .5rem;
+  padding: .2rem;
 }
 
 .info-product h2:hover{
