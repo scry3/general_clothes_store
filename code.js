@@ -2,39 +2,28 @@
 
 const botonesCategorias = document.querySelectorAll(".btnCategoria");
 let items = document.querySelectorAll(".item");
+let categoriaInterna;
+
+function addNewItems() {
+  items = document.querySelectorAll(".item");
+  categoriaInterna = items[items.length - 1]?.getAttribute("data-category") || "";
+  console.log("agregado");
+}
+
+addNewItems();
 formulario.style.display = "none";
 
 botonesCategorias.forEach((btn) => { //recorremos cada boton(por si agrego más)
   btn.addEventListener("click", function () { //agregamos la funcion a ejecutar.
     const categoria = this.getAttribute("data-categoria"); //'this' hace referencia al objeto que se este ejecutando en el momento.
-    items = document.querySelectorAll(".item"); //para que la pagina agregue cualquier item nuevo 
+    addNewItems(); //para que la pagina agregue cualquier item nuevo 
     ocultarTodosLosItems(); //funcion que pone en "display: none;" todos los items a los no hace referencia ese boton.
+    mostrarItemsDeCategoria(categoria);
     document.querySelectorAll("." + categoria).forEach((item) => { //toma cada item de 'categoria', y le agrega un punto parra tomarlo como clase.
       item.style.display = "block"; //hace que se muestren los items a los que hace referencia el boton presionado.
     });
   });
 });
-
-
-
-items = document.querySelectorAll(".item");
-
-//! FUNCION PARA ACCEDER A CADA CATEGORIA DE ROPA Y SUS PRODUCTOS
-/*a cada hijo de los items de ropa(top,pantalones, etc) les agregue una 'data-category' que sera igual a la clase extra dentro de cada 'hijo',
-es decir que la categoria 'polo' tenddra como data category 'polo' pero su clase seguira siendo 'item top', 
-y todos sus hijos tendran la clase 'item polo' */
-items.forEach((item) => { 
-  item.addEventListener("click", function () {
-    const categoriaInterna = this.getAttribute("data-category");
-    if (!item.classList.contains("final")) { // verifico si tienen la clase "final" antes de ocultar los items y mostrar los nuevos.
-      ocultarTodosLosItems();
-    document.querySelectorAll("." + categoriaInterna).forEach((item) => {
-      item.style.display = "block";
-    });
-    }
-  });
-});
-
 
 
 
@@ -50,9 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const imagen = document.getElementById("imagen").files[0];
     const nombre = document.getElementById("nombre").value;
     const categoria = document.getElementById("categoria").value;
+    const clasificacion = document.getElementById("clasificacion").value;
 
     const nuevoProducto = document.createElement("div");
     nuevoProducto.classList.add("item", categoria);
+    nuevoProducto.setAttribute('data-category',clasificacion);
 
     const figure = document.createElement("figure");
     const img = document.createElement("img");
@@ -73,16 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Oculta todos los elementos antes de mostrar los de la categoría seleccionada
     ocultarTodosLosItems();
-
+    
     // Muestra los elementos de la categoría seleccionada
-    document.querySelectorAll("." + categoria).forEach((item) => {
-      item.style.display = "block";
-    });
-
+    mostrarItemsDeCategoria(categoria);
+    
     // Limpia el formulario
     formulario.reset();
     ocultarFormulario();
+    addNewItems();
+    
   });
+
+
+
 
   let iconShow = false;
   const icon = document.getElementById("container-icon");
@@ -112,5 +106,34 @@ function ocultarTodosLosItems() {
     item.style.display = "none";
   });
 }
+
+
+
+
+function mostrarItemsDeCategoria(categoria) {
+  ocultarTodosLosItems();
+  document.querySelectorAll("." + categoria).forEach((item) => {
+    item.style.display = "block";
+  });
+}
+
+//! FUNCION PARA ACCEDER A CADA CATEGORIA DE ROPA Y SUS PRODUCTOS
+/*a cada hijo de los items de ropa(top,pantalones, etc) les agregué una 'data-category' que sera igual a la clase extra dentro de cada 'hijo',
+es decir que la categoria 'polo' tendra como data category 'polo' pero su clase seguira siendo 'item top', 
+y todos sus hijos tendran la clase 'item polo', 
+asi cuando se haga click en la categoria polo, se muestre todo de esa categoria, pero no la foto de la categoria en si. */
+document.querySelector('.container-items').addEventListener('click', function(event) {
+  const targetItem = event.target.closest('.item');
+  if (targetItem) {
+    console.log("click");
+    categoriaInterna = targetItem.getAttribute("data-category");
+    if (!targetItem.classList.contains("final")) {
+      ocultarTodosLosItems();
+      mostrarItemsDeCategoria(categoriaInterna);
+    }
+  }
+});
+
+
 
 
