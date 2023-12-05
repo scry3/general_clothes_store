@@ -1,12 +1,14 @@
-//! BOTONES PARA CAMBIAR DE SECCION
+//!PRINCIPIOS SOLID!(desglosar las funciones o bloques que se encargan de varias tareas no relacionadas.)
 
+//!BOTONES PARA CAMBIAR DE SECCION
 const botonesCategorias = document.querySelectorAll(".btnCategoria");
 let items = document.querySelectorAll(".item");
 let categoriaInterna;
 
+
 function addNewItems() {
   items = document.querySelectorAll(".item");
-  categoriaInterna = items[items.length - 1]?.getAttribute("data-category") || "";
+  categoriaInterna = items[items.length - 1]?.getAttribute("data-category") || ""; // el '?' es para solo realizar la asignacion de valor si existe en si.
   console.log("agregado");
 }
 
@@ -32,6 +34,8 @@ botonesCategorias.forEach((btn) => { //recorremos cada boton(por si agrego más)
 document.addEventListener("DOMContentLoaded", function () {
   const formulario = document.getElementById("formulario");
   const catalogo = document.querySelector(".container-items");
+  const boton_final = document.querySelector(".boton-final");
+  
 
   formulario.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -43,7 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const nuevoProducto = document.createElement("div");
     nuevoProducto.classList.add("item", categoria);
-    nuevoProducto.setAttribute('data-category',clasificacion);
+
+    nuevoProducto.setAttribute('data-category', clasificacion);
+
+    if(clasificacion == ""){
+      nuevoProducto.classList.add("final");
+    }
 
     const figure = document.createElement("figure");
     const img = document.createElement("img");
@@ -64,18 +73,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Oculta todos los elementos antes de mostrar los de la categoría seleccionada
     ocultarTodosLosItems();
-    
+
     // Muestra los elementos de la categoría seleccionada
     mostrarItemsDeCategoria(categoria);
-    
-    // Limpia el formulario
+
+    // Limpia el formulario y toma en cuenta todo item nuevo.
     formulario.reset();
     ocultarFormulario();
     addNewItems();
-    
   });
 
+});
 
+//? BLOQUE PARA ACTIVAR Y DESACTIVAR EL DISPLAY DEL FORMULARIO XD
 
 
   let iconShow = false;
@@ -90,8 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
       mostrarFormulario();
     }
   });
-});
-
   // Funciones para mostrar y ocultar el formulario
 function mostrarFormulario() {
   formulario.style.display = "block";
@@ -118,10 +126,10 @@ function mostrarItemsDeCategoria(categoria) {
 }
 
 //! FUNCION PARA ACCEDER A CADA CATEGORIA DE ROPA Y SUS PRODUCTOS
-/*a cada hijo de los items de ropa(top,pantalones, etc) les agregué una 'data-category' que sera igual a la clase extra dentro de cada 'hijo',
-es decir que la categoria 'polo' tendra como data category 'polo' pero su clase seguira siendo 'item top', 
+/*a cada hijo de los items de ropa(top,pantalones, etc) les agregué el atributo 'data-category' que sera igual a la clase extra dentro de cada nodo 'hijo',
+es decir que la categoria 'polo' tendra como data-category 'polo' pero su clase seguira siendo 'item top', 
 y todos sus hijos tendran la clase 'item polo', 
-asi cuando se haga click en la categoria polo, se muestre todo de esa categoria, pero no la foto de la categoria en si. */
+asi cuando se haga click en la categoria polo, se muestre todo de esa categoria, pero no la foto de la categoria en si que diria: 'remeras de polo' */
 document.querySelector('.container-items').addEventListener('click', function(event) {
   const targetItem = event.target.closest('.item');
   if (targetItem) {
@@ -133,7 +141,3 @@ document.querySelector('.container-items').addEventListener('click', function(ev
     }
   }
 });
-
-
-
-
