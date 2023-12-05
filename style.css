@@ -153,7 +153,7 @@ header h1 {
 }
 
 .item:hover {
-  box-shadow: 0 .625rem 1.25rem rgba(67, 86, 50, 0.861);
+  box-shadow: 0 .625rem 1.25rem rgba(86, 86, 86, 0.861);
 }
 
 .info-product {
@@ -216,13 +216,16 @@ img {
 .barraVertical {
   display: flex;
   flex-direction: column;
-  width: 6.25rem;
+  width: 5rem;
   background-color:#009246;
   margin-right: 1.25rem;
   overflow: hidden;
 }
 
 .barraVertical button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #009246;
   color: #fff;
   border: none;
@@ -233,6 +236,7 @@ img {
   transition: all 1s;
 }
 .barraVertical button p{
+  max-width: fit-content;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight:bolder;
 }
@@ -259,6 +263,14 @@ img {
 .container-items {
   flex: 1;
 }
+
+
+
+
+form{
+  color:#151a1a;
+}
+
 
 /* ---------------------------------- */
 
